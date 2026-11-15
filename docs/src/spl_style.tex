@@ -1,0 +1,35 @@
+% Shared look of the figures in docs/. Text 8 pt, Times.
+% Colors: cInk for this device's code and data, cFace (grey fill) for hardware, cCal for the one point each figure is about.
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots,pgfplotstable}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepgfplotslibrary{groupplots}
+
+\definecolor{cCal}{HTML}{D55E00}
+\definecolor{cInk}{HTML}{1F2933}
+\definecolor{cMuted}{HTML}{6B7280}
+\definecolor{cGrid}{HTML}{E3E6EA}
+\color{cInk}
+
+\newcommand{\figfont}{\fontsize{8}{9.5}\selectfont}
+\newcommand{\figsmall}{\fontsize{8}{9.5}\selectfont}
+
+\pgfplotsset{
+  spl/.style={
+    width=44mm, height=36mm, scale only axis=false,
+    axis line style={cMuted, line width=0.5pt},
+    tick style={cMuted, line width=0.5pt}, tick align=outside,
+    tick label style={font=\figsmall, text=cInk},
+    label style={font=\figfont, text=cInk},
+    legend style={font=\figsmall, draw=none, fill=none, text=cInk, inner sep=0pt},
+    legend cell align=left,
+    grid=major, major grid style={cGrid, line width=0.4pt},
+    axis lines*=left, clip mode=individual,
+    every axis plot/.append style={line width=0.9pt},
+  },
+}
