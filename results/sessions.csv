@@ -1,7 +1,0 @@
-session,bag,seconds,direction_messages,most_faces_in_a_frame,chunks_with_a_track,chunks_matched_to_a_face,raw_input_chunks,final_results,without_text,raw_input_with_text,separated_with_text,separated_with_a_number,interval_mean_ms,delay_median_ms,face_delay_median_ms
-1,bag_20260902_123554,136.7,1068,1,322,237,0,7,0,0,7,7,128.0,199.3,268.4
-2,bag_20260902_124204,148.5,1161,1,390,353,0,10,0,0,10,10,128.0,199.5,267.8
-3,bag_20260902_124439,136.5,1067,3,545,305,0,5,2,0,3,2,128.0,201.7,275.9
-4,bag_20260902_125518,134.9,965,3,693,230,0,12,3,0,9,9,128.0,203.7,272.5
-5,bag_20260902_234928,122.5,938,1,292,198,0,9,3,0,6,6,128.0,236.0,308.3
-6,bag_20260902_235135,322.5,2520,1,551,547,1806,22,1,13,8,8,128.0,239.1,309.3
