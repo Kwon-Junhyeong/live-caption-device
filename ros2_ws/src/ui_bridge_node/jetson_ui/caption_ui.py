@@ -22,9 +22,9 @@ UI_ROOT = PROJECT_ROOT / "ui"
 MAX_CAPTIONS = 7
 
 SPEAKERS = (
-    {"id": 1, "name": "화자 1", "color": "#2878f0"},
-    {"id": 2, "name": "화자 2", "color": "#20b45a"},
-    {"id": 3, "name": "화자 3", "color": "#ff9818"},
+    {"id": 1, "name": "Speaker 1", "color": "#2878f0"},
+    {"id": 2, "name": "Speaker 2", "color": "#20b45a"},
+    {"id": 3, "name": "Speaker 3", "color": "#ff9818"},
 )
 
 

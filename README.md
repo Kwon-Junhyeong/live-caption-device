@@ -2,7 +2,7 @@
 
 A tabletop device for deaf and hard-of-hearing people that puts matching speaker numbers on faces and on live captions. No one wears a microphone, and everything runs offline on a Jetson Orin Nano inside the device. Built for the 24th Embedded Software Contest (2026).
 
-![Caption list from the device's screen: each sentence carries the number of its speaker](docs/caption_list.png)
+![System](docs/system.png)
 
 ## From four microphones to captions labeled by speaker
 
@@ -13,17 +13,13 @@ Four ROS 2 nodes run on the device:
 3. **Speech recognition.** One faster-whisper session per voice, in Korean.
 4. **Screen.** The camera image with numbered faces, and the captions with the same numbers.
 
-![System](docs/system.png)
-
 ## Training data for this housing
 
-The microphones sit on the housing, and the housing scatters the sound before it reaches them. Every training voice is rendered through the housing's response computed with the boundary element method. With the housing modeled, a steering-vector search finds one speaker with a median error of 1.3 degrees, against 6.4 degrees with free-field steering vectors (`bem_matching/`, `experiments/sim_doa.py`).
+The microphones sit on the housing, and the housing scatters the sound before it reaches them. Every training voice is rendered through the housing's response computed with the boundary element method, so the network learns this housing.
 
 ## One network for direction and separation
 
 Mamba-3 layers carry their state from one 128 ms chunk to the next, so the network runs on a live stream. It has 1.98 M parameters and improves SI-SDR by 11.67 dB.
-
-![Network](docs/network.png)
 
 ## Timing and memory on the device
 

@@ -238,7 +238,7 @@ class CameraNode(Node):
             thickness = max(2, int(4 * scale)) if j in speaking_box else 1
             cv2.rectangle(canvas, (x, y), (x + w, y + h), colour, thickness)
             if j in matched.values() and number:
-                label = f"화자 {number}" + (" 발화" if j in speaking_box else "")
+                label = f"Speaker {number}" + (" speaking" if j in speaking_box else "")
                 cv2.putText(canvas, label, (x, max(y - 8, 14)),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, colour, 2)
         return canvas

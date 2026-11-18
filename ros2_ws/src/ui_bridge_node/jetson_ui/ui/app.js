@@ -53,7 +53,7 @@ function initializeWaveforms() {
 }
 
 function speakerName(speakers, speakerId) {
-  return speakers.find((speaker) => Number(speaker.id) === Number(speakerId))?.name || `화자 ${speakerId}`;
+  return speakers.find((speaker) => Number(speaker.id) === Number(speakerId))?.name || `Speaker ${speakerId}`;
 }
 
 function createSpeakerSlot(speakers, speakerId) {
@@ -99,7 +99,7 @@ function renderFaces(state) {
     if (face.active) {
       const badge = document.createElement("span");
       badge.className = "speaking-badge";
-      badge.textContent = "말하는 중";
+      badge.textContent = "Speaking";
       box.appendChild(badge);
     }
     elements.faceLayer.appendChild(box);
@@ -146,7 +146,7 @@ function renderCaptions(state) {
 
     const dots = document.createElement("span");
     dots.className = "typing-dots";
-    dots.setAttribute("aria-label", "음성 인식 중");
+    dots.setAttribute("aria-label", "Recognizing speech");
     dots.innerHTML = "<i></i><i></i><i></i>";
     row.appendChild(dots);
     fragment.appendChild(row);
@@ -155,7 +155,7 @@ function renderCaptions(state) {
   if (!captions.length && !state.partial?.text) {
     const empty = document.createElement("div");
     empty.className = "empty-caption";
-    empty.textContent = "한국어 자막을 기다리는 중입니다.";
+    empty.textContent = "Waiting for captions.";
     fragment.appendChild(empty);
   }
 
@@ -170,10 +170,10 @@ function renderCamera(status) {
   }
   elements.cameraStream.classList.toggle("is-hidden", !connected);
   elements.cameraPlaceholder.hidden = connected;
-  elements.cameraMessage.textContent = status.error ? "카메라 연결 상태를 확인해 주세요." : "카메라 연결을 기다리는 중입니다.";
+  elements.cameraMessage.textContent = status.error ? "Check the camera connection." : "Waiting for the camera.";
   elements.cameraLight.classList.toggle("live", connected);
   elements.cameraDot.classList.toggle("live", connected);
-  elements.cameraStatus.textContent = connected ? "카메라 연결됨" : "카메라 연결 대기";
+  elements.cameraStatus.textContent = connected ? "Camera connected" : "Waiting for the camera";
 }
 
 function renderControls(status) {
@@ -183,7 +183,7 @@ function renderControls(status) {
   elements.modelButton.setAttribute("aria-pressed", String(model));
 
   const sttRaw = status.stt_raw !== false;
-  elements.sttLabel.textContent = sttRaw ? "마이크 직접" : "화자 분리";
+  elements.sttLabel.textContent = sttRaw ? "Microphones" : "Separated voices";
   elements.sttButton.setAttribute("aria-pressed", String(sttRaw));
 }
 
@@ -194,16 +194,16 @@ function renderRuntime(state) {
   elements.recognitionIndicator.className = `status-indicator ${listening ? "live" : "idle"}`;
   elements.recognitionLabel.textContent = listening
     ? activeSpeakerId
-      ? `${speakerName(state.speakers, activeSpeakerId)} 음성 인식 중`
-      : "음성 인식 중"
-    : "음성 입력을 기다리는 중";
+      ? `${speakerName(state.speakers, activeSpeakerId)}: recognizing speech`
+      : "Recognizing speech"
+    : "Waiting for speech";
 
   const microphoneConnected = Boolean(status.audio_connected);
   elements.microphoneDot.classList.toggle("live", microphoneConnected);
-  elements.microphoneStatus.textContent = microphoneConnected ? "마이크 4채널 연결됨" : "마이크 4채널 연결 대기";
+  elements.microphoneStatus.textContent = microphoneConnected ? "4-channel microphones connected" : "Waiting for the 4-channel microphones";
   const ready = Boolean(status.demo || (status.doa_ready && status.stt_ready));
   elements.runtimeDot.classList.toggle("live", ready);
-  elements.runtimeStatus.textContent = ready ? "DOA, 화자 인식, STT 실행 중" : "DOA, 화자 인식, STT 준비 중";
+  elements.runtimeStatus.textContent = ready ? "DOA, speaker matching and STT running" : "Starting DOA, speaker matching and STT";
 
   elements.errorToast.hidden = !status.error;
   elements.errorToast.textContent = status.error || "";
@@ -221,11 +221,11 @@ function renderState(state) {
 async function refreshState() {
   try {
     const response = await fetch("/api/state", { cache: "no-store" });
-    if (!response.ok) throw new Error(`상태 응답 오류: ${response.status}`);
+    if (!response.ok) throw new Error(`Status request failed: ${response.status}`);
     renderState(await response.json());
   } catch (error) {
     elements.runtimeDot.classList.remove("live");
-    elements.runtimeStatus.textContent = "UI 서버 연결 재시도 중";
+    elements.runtimeStatus.textContent = "Reconnecting to the UI server";
   }
 }
 
@@ -241,7 +241,7 @@ async function toggleControl(action) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action }),
     });
-    if (!response.ok) throw new Error(`제어 요청 오류: ${response.status}`);
+    if (!response.ok) throw new Error(`Control request failed: ${response.status}`);
     await refreshState();
   } catch (error) {
     elements.errorToast.hidden = false;
