@@ -8,14 +8,14 @@ A tabletop device for deaf and hard-of-hearing people that puts matching speaker
 
 Four ROS 2 nodes run on the device:
 
-1. **Direction and separation.** One streaming network takes the audio of the four microphones in 128 ms chunks and returns a direction and a separated voice for each speaker.
+1. **Direction and separation.** One streaming network processes audio from the four microphones in 128 ms chunks and returns a direction and a separated voice for each speaker.
 2. **Camera.** Faces are detected, and each voice direction is matched to a face within 20 degrees.
 3. **Speech recognition.** One faster-whisper session per voice, in Korean.
 4. **Screen.** The camera image with numbered faces, and the captions with the same numbers.
 
 ## Training data for this housing
 
-The microphones sit on the housing, and the housing scatters the sound before it reaches them. Every training voice is rendered through the housing's response computed with the boundary element method, so the network learns this housing.
+The microphones sit on the housing, which scatters the sound before it reaches them. Every training voice is rendered through the housing's response computed with the boundary element method, so the network is trained on how this housing changes the sound.
 
 ## One network for direction and separation
 
