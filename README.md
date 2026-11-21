@@ -10,7 +10,7 @@ Four ROS 2 nodes run on the device:
 
 1. **Direction and separation.** One streaming network processes audio from the four microphones in 128 ms chunks and returns a direction and a separated voice for each speaker.
 2. **Camera.** Faces are detected, and each voice direction is matched to a face within 20 degrees.
-3. **Speech recognition.** One faster-whisper session per voice, in Korean.
+3. **Speech recognition.** One faster-whisper model serves every voice in turn, with a streaming session per voice, in Korean.
 4. **Screen.** The camera image with numbered faces, and the captions with the same numbers.
 
 ## Training data for this housing
