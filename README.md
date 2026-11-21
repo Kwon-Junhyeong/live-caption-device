@@ -17,6 +17,13 @@ Four ROS 2 nodes run on the device:
 
 The microphones sit on the housing, which scatters the sound before it reaches them. Every training voice is rendered through the housing's response computed with the boundary element method, so the network is trained on how this housing changes the sound.
 
+`training_data/generate.py` writes the scenes: four seconds at 8 kHz with up to three speakers, and some clips with no speaker at all. The speech is LibriSpeech and Zeroth-Korean, with no speaker shared between the training and test sets. Speakers sit or stand in rooms of 5 to 12 m, at least 7 degrees apart as seen from the device. Each image source of the room passes through the housing's response for its own direction (`training_data/reverb_synth.py`), the diffuse noise gets the coherence that the housing gives it (`training_data/body_noise.py`), and sensor noise and everyday sounds such as coughing and typing are added.
+
+```sh
+# LIBRISPEECH, ZEROTH_KOREAN, NOISEX92 and ESC50 point to the corpora
+python training_data/generate.py HOUSING_TABLE.h5 OUT_DIR -n 100 --split train
+```
+
 ## One network for direction and separation
 
 Mamba-3 layers carry their state from one 128 ms chunk to the next, so the network runs on a live stream. It has 1.98 M parameters and improves SI-SDR by 11.67 dB.
